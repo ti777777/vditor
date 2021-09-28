@@ -14,7 +14,6 @@ const pkg = require('./package.json')
 
 module.exports = {
   mode: 'development',
-  watch: true,
   output: {
     filename: '[name]',
     path: path.resolve(__dirname, 'demo/dist'),
@@ -46,10 +45,11 @@ module.exports = {
           {
             loader: 'postcss-loader',
             options: {
-              ident: 'postcss',
-              plugins: () => [
-                require('autoprefixer')({grid: true, remove: false}),
-              ],
+              postcssOptions: {
+                plugins: [
+                  ['autoprefixer', {grid: true, remove: false}],
+                ],
+              },
             },
           },
           {
@@ -130,18 +130,11 @@ module.exports = {
     }),
   ],
   devServer: {
-    contentBase: path.join(__dirname, '.'),
+    static: {
+      directory: path.join(__dirname, '.'),
+    },
     port: 9000,
     host: '0.0.0.0',
-    before: (app) => {
-      app.get('/dist/js/lute/lute.wasm.br', function (req, res, next) {
-        res.set({
-          'Content-Encoding': 'br',
-          'Content-Type': 'application/wasm',
-        })
-        next()
-      })
-    },
     proxy: {
       '/api': {
         target: 'http://localhost:8080',

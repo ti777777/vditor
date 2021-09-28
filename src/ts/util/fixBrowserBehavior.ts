@@ -2,7 +2,7 @@ import {Constants} from "../constants";
 import {input as IRInput} from "../ir/input";
 import {processAfterRender} from "../ir/process";
 import {processAfterRender as processSVAfterRender, processPaste} from "../sv/process";
-import {uploadFiles} from "../upload";
+import {uploadFiles} from "../upload/index";
 import {setHeaders} from "../upload/setHeaders";
 import {afterRenderEvent} from "../wysiwyg/afterRenderEvent";
 import {input} from "../wysiwyg/input";
@@ -228,9 +228,13 @@ export const listToggle = (vditor: IVditor, range: Range, type: string, cancel =
                 let element;
                 if (type === "list") {
                     element = document.createElement("ul");
+                    element.setAttribute("data-marker", "*");
                 } else {
                     element = document.createElement("ol");
+                    element.setAttribute("data-marker", "1.");
                 }
+                element.setAttribute("data-block", "0");
+                element.setAttribute("data-tight", itemElement.parentElement.getAttribute("data-tight"));
                 element.innerHTML = itemElement.parentElement.innerHTML;
                 itemElement.parentElement.parentNode.replaceChild(element, itemElement.parentElement);
             }
@@ -1351,7 +1355,7 @@ export const paste = async (vditor: IVditor, event: (ClipboardEvent | DragEvent)
     if (doc.body) {
         textHTML = doc.body.innerHTML;
     }
-
+    textHTML = Lute.Sanitize(textHTML);
     vditor.wysiwyg.getComments(vditor);
 
     // process code
