@@ -13,10 +13,10 @@
   * `options.outline` 修改为 `{ enable: boolean, position: "left" | "right" }`
   * `toolbar.click` 参数修改为 `event: Event, vditor: IVditor`
 * 3.6
- * `options.preview.actions` 添加 `tooltip` 
- * `mermaidRender` 添加 `theme` 参数 
- * `mindmapRender` 添加 `theme` 参数 
- * `chartRender` 添加 `theme` 参数 
+ * `options.preview.actions` 添加 `tooltip`
+ * `mermaidRender` 添加 `theme` 参数
+ * `mindmapRender` 添加 `theme` 参数
+ * `chartRender` 添加 `theme` 参数
 * 3.5
   * `mermaidRender` 移除 `className` 参数
 * 3.4
@@ -89,13 +89,65 @@
   * 添加 `typewriterMode` 配置，默认值为 false。1.7 版本用户需要手动开启该功能
 * v1.7
   * `option.preivew.show?: boolean` => `option.preivew.mode?: string`
-  * 移除 `option.editorName` 
-  
+  * 移除 `option.editorName`
+
 ### TODO
 
 * [open issues](https://github.com/Vanessa219/vditor/issues)
 
-### v3.8.8 / 2021-10-xx
+### v3.8.15 / 2022-06
+
+### v3.8.14 / 2022-05
+
+* [1223](https://github.com/Vanessa219/vditor/issues/1223) 关于有时显示不完整 `修复缺陷`
+* [1218](https://github.com/Vanessa219/vditor/issues/1218) 高度设置为 string 时，大纲锚点失效 `修复缺陷`
+* [1215](https://github.com/Vanessa219/vditor/issues/1215) sv 模式 setValue 导致状态错误 `修复缺陷`
+* [1219](https://github.com/Vanessa219/vditor/issues/1219) vditor.destroy 报错 `修复缺陷`
+* [1208](https://github.com/Vanessa219/vditor/pull/1208) Sass -> Less `开发重构`
+* [1209](https://github.com/Vanessa219/vditor/issues/1209) 侧栏大纲内容未转义 `修复缺陷`
+* [1207](https://github.com/Vanessa219/vditor/issues/1207) 3.8.13 源码 build 报错 `修复缺陷`
+
+### v3.8.13 / 2022-03-31
+
+* [1206](https://github.com/Vanessa219/vditor/issues/1206) 评论语法解析和行级 HTML 解析冲突 `修复缺陷`
+* [1054](https://github.com/Vanessa219/vditor/issues/1054) disabled 后应禁止粘贴 `修复缺陷`
+* [1162](https://github.com/Vanessa219/vditor/issues/1162) XSS 安全漏洞 `修复缺陷`
+* [1203](https://github.com/Vanessa219/vditor/issues/1203) 支持 solidity, yul 语法 `引入特性`
+* [1176](https://github.com/Vanessa219/vditor/issues/1176) 代码规范 lint 从 Tslint 迁移至 Eslint `开发重构`
+* [1178](https://github.com/Vanessa219/vditor/issues/1198) 调用 insertValue 后第一次用户输入没有触发 input 回调函数 `修复缺陷`
+* [1179](https://github.com/Vanessa219/vditor/pull/1179) 更新代码风格工具&包管理工具 `开发重构`
+
+### v3.8.12 / 2022-03-03
+
+* [1184](https://github.com/Vanessa219/vditor/issues/1184) wysiwyg 模式下，录音渲染出现问题，无法正常显示 audio 组件 `修复缺陷`
+* [1182](https://github.com/Vanessa219/vditor/issues/1182) 撤销后大纲不会刷新 `修复缺陷`
+* [1178](https://github.com/Vanessa219/vditor/issues/1178) 3.8.12 中使用 highlight.js 渲染的代码块无法高亮 `修复缺陷`
+* [1171](https://github.com/Vanessa219/vditor/issues/1171) 代码编辑区域未能按照预期隐藏 `改进功能`
+* [1177](https://github.com/Vanessa219/vditor/pull/1177) 优化 Emoji 绑定事件 `开发重构`
+
+### v3.8.11 / 2022-01-22
+
+* [1156](https://github.com/Vanessa219/vditor/issues/1156) 所见即所得行级 HTML 解析错误 `修复缺陷`
+* [1133](https://github.com/Vanessa219/vditor/issues/1133) SVG 事件导致的 XSS 漏洞 `修复缺陷`
+* [1158](https://github.com/Vanessa219/vditor/pull/1158) Add mhchem support to KaTex `引入特性`
+* [1153](https://github.com/Vanessa219/vditor/issues/1153) vditor 的生产代码未经 minify `改进功能`
+* [1004](https://github.com/Vanessa219/vditor/issues/1004) options.input无法监听点击toolbar link的输入内容 `改进功能`
+
+### v3.8.10 / 2021-12-21
+
+* [1134](https://github.com/Vanessa219/vditor/issues/1134) 渲染时代码块复制图标报错 `修复缺陷`
+* [1129](https://github.com/Vanessa219/vditor/pull/1129) WYSIWYG 下，点击语言后光标切换到代码输入框中 `改进功能`
+* [1122](https://github.com/Vanessa219/vditor/pull/1122) 预览中退出全屏后，工具栏布局错误 `修复缺陷`
+* [1123](https://github.com/Vanessa219/vditor/pull/1123) 预览模式下，工具栏不自动隐藏 `改进功能`
+* [1124](https://github.com/Vanessa219/vditor/pull/1124) 在焦点更改后，代码选择列表不自动隐藏 `改进功能`
+* [1121](https://github.com/Vanessa219/vditor/pull/1121) WYSIWYG 下，Enter 也可以切换到代码输入框中 `改进功能`
+* [1103](https://github.com/Vanessa219/vditor/pull/1103) 支持多语言切换 `改进功能`
+* [1105](https://github.com/Vanessa219/vditor/pull/1105) 兼容 Firefox 中的代码语言选择 `修复缺陷`
+* [1098](https://github.com/Vanessa219/vditor/pull/1098) 兼容 Firefox 中的文件拖拽 `修复缺陷`
+* [1097](https://github.com/Vanessa219/vditor/pull/1097) options.hint.extend[].hint 支持异步 `改进功能`
+* [1101](https://github.com/Vanessa219/vditor/pull/1101) 支持 options.upload.handler 异步 `改进功能`
+* [1089](https://github.com/Vanessa219/vditor/pull/1089) 解决内存泄漏问题 `开发重构`
+* [158](https://github.com/88250/lute/issues/158) Table 紧跟的上一行不是空行时，SpinVditorSVDOM 会将整个表格过滤掉 `修复缺陷`
 
 ### v3.8.7 / 2021-09-21
 
@@ -156,7 +208,7 @@
     * codeRender 方法中移除 lang 参数
     * 为 options 添加 i18n 语言自定义参数
     * 添加 exportJSON 方法
-  
+
 ### v3.7.7 / 2021-01-19
 
 * [903](https://github.com/Vanessa219/vditor/issues/903) 使用 setValue 后第一次输入无法撤销 `修复缺陷`
@@ -236,8 +288,8 @@
 * [781](https://github.com/Vanessa219/vditor/issues/781) 增加 `linkPrefix` 用于强制对链接目标地址添加前缀 `引入特性`
 * [780](https://github.com/Vanessa219/vditor/pull/780) linkToImg支持自定义format `引入特性`
 * 文档修改
-  * 3.6.1 
-   * `options.preview.actions` 添加 `tooltip` 
+  * 3.6.1
+   * `options.preview.actions` 添加 `tooltip`
    * 添加 `options.comment` 及 `getCommentIds`, `hlCommentIds`, `unHlCommentIds`, `removeCommentIds` 方法
      ```
      comment?: {
@@ -249,9 +301,9 @@
      };
      ```
   * 3.6.4
-    * `mermaidRender` 添加 `theme` 参数 
-    * `mindmapRender` 添加 `theme` 参数 
-    * `chartRender` 添加 `theme` 参数 
+    * `mermaidRender` 添加 `theme` 参数
+    * `mindmapRender` 添加 `theme` 参数
+    * `chartRender` 添加 `theme` 参数
 
 ### v3.5.5 / 2020-10-12
 
@@ -525,7 +577,7 @@
   * 示例代码地址修改：static-preview.html => preview.html，static.html => b3log.org/vditor/demo/render.html
   * 添加 [Vditor](https://b3log.org/vditor) 官方首页
   * 添加缓存回调 `options.cache.after(markdown:string)`
-  
+
 
 ### v3.1.23 / 2020-05-05
 
@@ -604,7 +656,7 @@
   * `setPreviewMode` 方法移除 `preview`
   * `options.preview` 中 `maxWidth` 默认值改为 800, `mode` 移除 `preview` 选项，`markdonw` 添加 `theme`、`setext` 配置
   * IPreviewOptions 添加 `after`，`lazyLoadImage`, `markdown.theme`, `renderers`, `markdown.paragraphBeginningSpace`，移除 `theme`
-  
+
 ### v3.0.12 / 2020-04-06
 
 * [276](https://github.com/Vanessa219/vditor/issues/276) 当设置编辑器宽度后，模式切换导致样式错误 `修复缺陷`
@@ -869,7 +921,7 @@
 * [168](https://github.com/b3log/vditor/issues/168) highlightRender报错 `invalid`
 * [167](https://github.com/b3log/vditor/issues/167) withCredentials（跨域传递 cookie） `feature`
 * [166](https://github.com/b3log/vditor/issues/166) typewriterMode 为 false 时，preview 区域不会同步滚动 `bug`
-* 文档更新 
+* 文档更新
   * public static mermaidRender(element: HTMLElement, className?: string)
   * hotkey 和 setSelection 方法不支持 wysiwyg
   * setValue 参数改为 markdown

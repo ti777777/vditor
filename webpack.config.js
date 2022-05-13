@@ -16,7 +16,7 @@ const BundleAnalyzerPlugin = require(
 const pkg = require('./package.json')
 const banner = new webpack.BannerPlugin({
   banner: `Vditor v${pkg.version} - A markdown editor written in TypeScript.
-  
+
 MIT License
 
 Copyright (c) 2018-present B3log 开源, b3log.org
@@ -59,8 +59,22 @@ module.exports = [
       'index.min': './src/index.ts',
       'method.min': './src/method.ts',
     },
+    optimization: {
+      minimize: true,
+      minimizer: [
+        new TerserPlugin({
+          include: ['index.min.js', 'method.min.js'],
+          terserOptions: {
+            format: {
+              comments: false,
+            },
+          },
+          extractComments: false,
+        }),
+      ],
+    },
     resolve: {
-      extensions: ['.ts', '.js', '.scss', 'png'],
+      extensions: ['.ts', '.js', '.less', 'png'],
     },
     module: {
       rules: [
@@ -102,7 +116,7 @@ module.exports = [
           use: 'ts-loader',
         },
         {
-          test: /\.scss$/,
+          test: /\.less$/,
           include: [path.resolve(__dirname, 'src/assets')],
           use: [
             MiniCssExtractPlugin.loader,
@@ -123,7 +137,7 @@ module.exports = [
               },
             },
             {
-              loader: 'sass-loader', // compiles Sass to CSS
+              loader: 'less-loader', // compiles Less to CSS
             },
           ],
         },
@@ -147,22 +161,8 @@ module.exports = [
           {from: 'src/css', to: 'css'},
           {from: 'src/images', to: 'images'},
           {from: 'src/js', to: 'js'},
-          {from: 'types', to: 'types'}
+          {from: 'types', to: 'types'},
         ],
       }),
     ],
-    optimization: {
-      minimize: true,
-      minimizer: [
-        new TerserPlugin({
-          include: /\/src\/ts/,
-          terserOptions: {
-            format: {
-              comments: false,
-            },
-          },
-          extractComments: false,
-        }),
-      ],
-    },
   }]

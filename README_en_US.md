@@ -6,9 +6,8 @@ Easy-to-use Markdown editor, born to adapt to different application scenarios
 <br><br>
 <a title="MIT" target="_blank" href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-orange.svg?style=flat-square"></a>
 <a title="npm bundle size" target="_blank" href="https://www.npmjs.com/package/vditor"><img alt="npm bundle size" src="https://img.shields.io/bundlephobia/minzip/vditor?style=flat-square&color=blueviolet"></a>
-<a title="Dependencies" target="_blank" href="https://github.com/Vanessa219/vditor"><img src="https://img.shields.io/david/Vanessa219/vditor.svg?style=flat-square&color=ff96b4"></a>  <br>
-<a title="Version" target="_blank" href="https://www.npmjs.com/package/vditor"><img src="https://img.shields.io/npm/v/vditor.svg?style=flat-square"></a>
-<a title="Downloads" target="_blank" href="https://www.npmjs.com/package/vditor"><img src="https://img.shields.io/npm/dt/vditor.svg?style=flat-square&color=97ca00"></a><br>
+<a title="Version" target="_blank" href="https://www.npmjs.com/package/vditor"><img src="https://img.shields.io/npm/v/vditor.svg?style=flat-square"></a><br>
+<a title="Downloads" target="_blank" href="https://www.npmjs.com/package/vditor"><img src="https://img.shields.io/npm/dt/vditor.svg?style=flat-square&color=97ca00"></a>
 <a title="jsdelivr" target="_blank" href="https://www.jsdelivr.com/package/npm/vditor"><img src="https://data.jsdelivr.com/v1/package/npm/vditor/badge"/></a>
 <a title="Hits" target="_blank" href="https://github.com/88250/hits"><img src="https://hits.b3log.org/Vanessa219/vditor.svg"></a> <br><br>
 <a title="GitHub Watchers" target="_blank" href="https://github.com/Vanessa219/vditor/watchers"><img src="https://img.shields.io/github/watchers/Vanessa219/vditor.svg?label=Watchers&style=social"></a>
@@ -23,7 +22,7 @@ Easy-to-use Markdown editor, born to adapt to different application scenarios
 
 ## 💡 Introduction
 
-[Vditor](https://b3log.org/vditor) is a browser-side Markdown editor, implemented using TypeScript. Support native JavaScript, Vue, React, Angular and Svelte, provide [desktop](https://b3log.org/siyuan).
+[Vditor](https://b3log.org/vditor) is a browser-side Markdown editor, Support WYSIWYG, instant rendering (similar to Typora) and split-screen preview mode. It is implemented using TypeScript and supports native JavaScript and frameworks such as Vue, React, Angular, and Svelte..
 
 Welcome to [Vditor Official Site](https://b3log.org/vditor) to learn more.
 
@@ -113,7 +112,6 @@ Most of the above features can be enabled or disabled through the switch configu
 
 * [Sym](https://github.com/88250/symphony) A modern community (forum/BBS/SNS/blog) platform implemented in Java
 * [Solo](https://github.com/88250/solo) & [Pipe](https://github.com/88250/pipe) B3log distributed community blog end node, welcome to join the next generation community network
-* [SiYuan](https://b3log.org/siyuan) A Markdown Block-Reference and Bidirectional-Link note-taking application
 * [Arya](https://github.com/nicejade/markdown-online-editor) Based on Vue, Vditor, built online Markdown editor
 * [More cases](https://github.com/Vanessa219/vditor/network/dependents?package_id=UGFja2FnZS0zMTY2Mzg4MzE%3D)
 
@@ -155,7 +153,7 @@ const vditor = new Vditor(id, {options...})
 
 ### Themes
 
-* Support two sets of black and white themes: classic/dark
+* Support four sets of black and white themes: and-design, classic, dark, wechat
 * Use the scss/css developed by yourself to fully customize the style after referring to the existing style
 * Theme colors can be customized by modifying variables in [index.scss](https://github.com/Vanessa219/vditor/blob/master/src/assets/scss/index.scss)
 * Adding `class="vditor-reset"` (classic theme) or `class="vditor-reset vditor-reset--dark"` (black theme) attribute on the content display element can display the content more friendly
@@ -281,7 +279,7 @@ new Vditor('vditor', {
 |   | Explanation | Default |
 | - | - | - |
 | current | current Markdown Theme | "light" |
-| list | Choose Markdown Theme List | { dark: "Dark", light: "Light", wechat: "WeChat" } |
+| list | Choose Markdown Theme List | { "ant-design": "Ant Design", dark: "Dark", light: "Light", wechat: "WeChat" } |
 | path | CSS Path | `https://cdn.jsdelivr.net/npm/vditor@${VDITOR_VERSION}/dist/css/content-theme` |
 
 #### options.preview.hljs
@@ -341,13 +339,15 @@ Default: ["desktop", "tablet", "mobile", "mp-wechat", "zhihu"]
 | extend: IHintExtend[] | @/# and other keyword auto-completion expansion | [] |
 
 ```ts
-interface IHintExtend {
-    key: string;
+interface IHintData {
+  html: string;
+  value: string;
+}
 
-    hint?(value: string): Array<{
-        html: string;
-        value: string;
-    }>;
+interface IHintExtend {
+  key: string;
+
+  hint?(value: string): IHintData[] | Promise<IHintData[]>;
 }
 ```
 
@@ -403,9 +403,9 @@ xhr.send(JSON.stringify({url: src})); // src is the address of the image outside
 | filename | Sanitizing file names (name: string): string \| name => name.replace(/\W/g, '') |
 | accept | File upload type, same as [input accept](https://www.w3schools.com/tags/att_input_accept.asp) | - |
 | validate | Check, return true if successful, otherwise return error message (files: File[]) => string \| boolean | - |
-| handler | Custom upload, return error message when an error occurs (files: File[]) => string \| null | - |
+| handler(files: File[]) => string \| null \| Promise<string> \| Promise<null> | Custom upload, return error message when an error occurs | - |
 | format | Transform the data returned by the server to meet the built-in data structure (files: File[], responseText: string): string | - |
-| file | Process the uploaded file before returning (files: File[]): File[] | - |
+| file(files: File[]): File[] \| Promise<File[]> | Process the uploaded file before return. | - |
 | setHeaders | Use the return value to set the header before uploading (): { [key: string]: string } | - |
 | extraData | Append data to FormData { [key: string]: string | Blob } | - |
 | multiple | Allow multiple file uploads | true |

@@ -23,7 +23,6 @@ export class Preview {
     constructor(vditor: IVditor) {
         this.element = document.createElement("div");
         this.element.className = `vditor-preview`;
-
         const previewElement = document.createElement("div");
         previewElement.className = "vditor-reset";
         if (vditor.options.classes.preview) {

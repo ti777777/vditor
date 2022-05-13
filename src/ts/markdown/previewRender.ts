@@ -90,10 +90,21 @@ export const previewRender = async (previewElement: HTMLDivElement, markdown: st
                 "options.lang error, see https://ld246.com/article/1549638745630#options",
             );
         } else {
-            addScriptSync(`${mergedOptions.cdn}/dist/js/i18n/${mergedOptions.lang}.js`, "vditorI18nScript");
+            const i18nScriptPrefix = "vditorI18nScript";
+            const i18nScriptID = i18nScriptPrefix + mergedOptions.lang;
+            document.querySelectorAll(`head script[id^="${i18nScriptPrefix}"]`).forEach((el) => {
+                if (el.id !== i18nScriptID) {
+                    document.head.removeChild(el);
+                }
+            });
+            await addScript(`${mergedOptions.cdn}/dist/js/i18n/${mergedOptions.lang}.js`, i18nScriptID);
         }
     } else {
         window.VditorI18n = mergedOptions.i18n;
+    }
+
+    if (mergedOptions.icon) {
+        await addScript(`${mergedOptions.cdn}/dist/js/icons/${mergedOptions.icon}.js`, "vditorIconScript");
     }
 
     setContentTheme(mergedOptions.theme.current, mergedOptions.theme.path);
@@ -125,9 +136,6 @@ export const previewRender = async (previewElement: HTMLDivElement, markdown: st
     }
     if (mergedOptions.lazyLoadImage) {
         lazyLoadImageRender(previewElement);
-    }
-    if (mergedOptions.icon) {
-        addScript(`${mergedOptions.cdn}/dist/js/icons/${mergedOptions.icon}.js`, "vditorIconScript");
     }
     previewElement.addEventListener("click", (event: MouseEvent & { target: HTMLElement }) => {
         const spanElement = hasClosestByMatchTag(event.target, "SPAN");

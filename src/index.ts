@@ -1,4 +1,4 @@
-import "./assets/scss/index.scss";
+import "./assets/less/index.less";
 import VditorMethod from "./method";
 import {Constants, VDITOR_VERSION} from "./ts/constants";
 import {DevTools} from "./ts/devtools/index";
@@ -19,7 +19,7 @@ import {Tip} from "./ts/tip/index";
 import {Toolbar} from "./ts/toolbar/index";
 import {disableToolbar, hidePanel} from "./ts/toolbar/setToolbar";
 import {enableToolbar} from "./ts/toolbar/setToolbar";
-import {initUI} from "./ts/ui/initUI";
+import {initUI, UIUnbindListener} from "./ts/ui/initUI";
 import {setCodeTheme} from "./ts/ui/setCodeTheme";
 import {setContentTheme} from "./ts/ui/setContentTheme";
 import {setPreviewMode} from "./ts/ui/setPreviewMode";
@@ -73,7 +73,14 @@ class Vditor extends VditorMethod {
                     "options.lang error, see https://ld246.com/article/1549638745630#options",
                 );
             } else {
-                addScript(`${mergedOptions.cdn}/dist/js/i18n/${mergedOptions.lang}.js`, "vditorI18nScript").then(() => {
+                const i18nScriptPrefix = "vditorI18nScript";
+                const i18nScriptID = i18nScriptPrefix + mergedOptions.lang;
+                document.querySelectorAll(`head script[id^="${i18nScriptPrefix}"]`).forEach((el) => {
+                    if (el.id !== i18nScriptID) {
+                        document.head.removeChild(el);
+                    }
+                });
+                addScript(`${mergedOptions.cdn}/dist/js/i18n/${mergedOptions.lang}.js`, i18nScriptID).then(() => {
                     this.init(id as HTMLElement, mergedOptions);
                 });
             }
@@ -269,7 +276,7 @@ class Vditor extends VditorMethod {
     /** 设置编辑器内容 */
     public setValue(markdown: string, clearStack = false) {
         if (this.vditor.currentMode === "sv") {
-            this.vditor.sv.element.innerHTML = this.vditor.lute.SpinVditorSVDOM(markdown);
+            this.vditor.sv.element.innerHTML = `<div data-block='0'>${this.vditor.lute.SpinVditorSVDOM(markdown)}</div>`;
             processSVAfterRender(this.vditor, {
                 enableAddUndoStack: true,
                 enableHint: false,
@@ -320,8 +327,14 @@ class Vditor extends VditorMethod {
         this.vditor.element.innerHTML = this.vditor.originalInnerHTML;
         this.vditor.element.classList.remove("vditor");
         this.vditor.element.removeAttribute("style");
-        document.getElementById("vditorIconScript").remove();
+        const iconScript = document.getElementById("vditorIconScript")
+        if (iconScript) {
+            iconScript.remove();
+        }
         this.clearCache();
+
+        UIUnbindListener();
+        this.vditor.wysiwyg.unbindListener();
     }
 
     /** 获取评论 ID */
