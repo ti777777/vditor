@@ -8,6 +8,7 @@ import {highlightRender} from "../markdown/highlightRender";
 import {mathRender} from "../markdown/mathRender";
 import {mediaRender} from "../markdown/mediaRender";
 import {mermaidRender} from "../markdown/mermaidRender";
+import {markmapRender} from "../markdown/markmapRender";
 import {mindmapRender} from "../markdown/mindmapRender";
 import {plantumlRender} from "../markdown/plantumlRender";
 import {getEventName} from "../util/compatibility";
@@ -51,8 +52,21 @@ export class Preview {
                 }
                 return;
             }
+            if (event.target.tagName === "A") {
+                if (vditor.options.link.click) {
+                    vditor.options.link.click(event.target);
+                } else if (vditor.options.link.isOpen) {
+                    window.open(event.target.getAttribute("href"));
+                }
+                event.preventDefault();
+                return;
+            }
             if (event.target.tagName === "IMG") {
-                previewImage(event.target as HTMLImageElement, vditor.options.lang, vditor.options.theme);
+                if (vditor.options.image.preview) {
+                    vditor.options.image.preview(event.target)
+                } else if (vditor.options.image.isPreview) {
+                    previewImage(event.target as HTMLImageElement, vditor.options.lang, vditor.options.theme);
+                }
             }
         });
 
@@ -211,6 +225,7 @@ export class Preview {
         highlightRender(vditor.options.preview.hljs, vditor.preview.element.lastElementChild as HTMLElement,
             vditor.options.cdn);
         mermaidRender(vditor.preview.element.lastElementChild as HTMLElement, vditor.options.cdn, vditor.options.theme);
+        markmapRender(vditor.preview.element.lastElementChild as HTMLElement, vditor.options.cdn, vditor.options.theme);
         flowchartRender(vditor.preview.element.lastElementChild as HTMLElement, vditor.options.cdn);
         graphvizRender(vditor.preview.element.lastElementChild as HTMLElement, vditor.options.cdn);
         chartRender(vditor.preview.element.lastElementChild as HTMLElement, vditor.options.cdn, vditor.options.theme);

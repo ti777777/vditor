@@ -49,6 +49,12 @@ export const fixCJKPosition = (range: Range, vditor: IVditor, event: KeyboardEve
     const pLiElement = hasClosestByMatchTag(range.startContainer, "P") ||
         hasClosestByMatchTag(range.startContainer, "LI");
     if (pLiElement && getSelectPosition(pLiElement, vditor[vditor.currentMode].element, range).start === 0) {
+
+        // https://github.com/Vanessa219/vditor/issues/1289 WKWebView切换输入法产生六分之一空格，造成光标错位
+        if (pLiElement.nodeValue) {
+            pLiElement.nodeValue = pLiElement.nodeValue.replace(/\u2006/g, '');
+        }
+
         const zwspNode = document.createTextNode(Constants.ZWSP);
         range.insertNode(zwspNode);
         range.setStartAfter(zwspNode);
@@ -1338,11 +1344,11 @@ export const paste = async (vditor: IVditor, event: (ClipboardEvent | DragEvent)
             xhr.send(JSON.stringify({url: src}));
         }
         if (vditor.currentMode === "ir") {
-            return [`<span class="vditor-ir__marker vditor-ir__marker--link">${src}</span>`, Lute.WalkContinue];
+            return [`<span class="vditor-ir__marker vditor-ir__marker--link">${Lute.EscapeHTMLStr(src)}</span>`, Lute.WalkContinue];
         } else if (vditor.currentMode === "wysiwyg") {
             return ["", Lute.WalkContinue];
         } else {
-            return [`<span class="vditor-sv__marker--link">${src}</span>`, Lute.WalkContinue];
+            return [`<span class="vditor-sv__marker--link">${Lute.EscapeHTMLStr(src)}</span>`, Lute.WalkContinue];
         }
     };
 
@@ -1441,6 +1447,10 @@ export const paste = async (vditor: IVditor, event: (ClipboardEvent | DragEvent)
                 }
             }
         } else if (textPlain.trim() !== "" && files.length === 0) {
+            const range = getEditorRange(vditor);
+            if (range.toString() !== ""  && vditor.lute.IsValidLinkDest(textPlain)) {
+                textPlain = `[${range.toString()}](${textPlain})`;
+            }
             if (vditor.currentMode === "ir") {
                 renderers.Md2VditorIRDOM = {renderLinkDest};
                 vditor.lute.SetJSRenderers({renderers});

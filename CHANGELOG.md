@@ -1,7 +1,17 @@
 ## Vditor change log
 
 ### 升级
-
+* 3.9
+  * 添加 option.link 和 options.image
+* 3.8
+  * 添加 plantumlRender 方法
+  * options.input 移除 previewElement 参数
+  * 添加表格增加向上插入行 ⇧⌘F 和向左插入列 ⇧⌘G 的快捷键
+  * 快捷键配置格式修改为 ⇧⌘[] / ⌘[] / ⌥⌘[]
+  * 添加 hint.parse 配置
+  * codeRender 方法中移除 lang 参数
+  * 为 options 添加 i18n 语言自定义参数
+  * 添加 exportJSON 方法
 * 3.7
   * `preview` 静态方法添加 `mode` 配置
   * 大纲 DOM 结构和 class 变更
@@ -95,8 +105,50 @@
 
 * [open issues](https://github.com/Vanessa219/vditor/issues)
 
-### v3.8.15 / 2022-06
+### v3.9.2 / 2023-05
 
+* [选中文本后粘贴网址自动生成链接](https://github.com/Vanessa219/vditor/issues/1301) `改进功能`
+* [情景菜单输入框中 Esc/alt+Enter/Enter 可将光标设置到编辑器中](https://github.com/Vanessa219/vditor/issues/1302) `改进功能`
+* [文本选中弹出组件 speech 位置被多屏影响](https://github.com/Vanessa219/vditor/issues/1373) `改进功能`
+* [更新补充 JSDoc](https://github.com/Vanessa219/vditor/pull/1374) `文档相关`
+
+### v3.9.1 / 2023-03-14
+
+* [新增法语](https://github.com/Vanessa219/vditor/pull/1365) `引入特性`
+* [新增瑞士语](https://github.com/Vanessa219/vditor/pull/1359) `引入特性`
+* [代码块下一行的标题前输入中文时内容会跑到代码块里面](https://github.com/Vanessa219/vditor/issues/1356) `修复缺陷`
+* [连续插入多个列表，控制台报错](https://github.com/Vanessa219/vditor/issues/1343) `修复缺陷`
+* [IR 模式选择内容设置为代码块时异常](https://github.com/Vanessa219/vditor/issues/1354) `修复缺陷`
+
+### v3.9.0 / 2023-01-15
+
+* [1345](https://github.com/Vanessa219/vditor/issues/1345) 移除复制代码块末尾的换行 `改进功能`
+* [1348](https://github.com/Vanessa219/vditor/pull/1348) 新增链接和图片处理接口 `引入特性`
+* [1342](https://github.com/Vanessa219/vditor/pull/1342) 初始化后不自动聚焦 `改进功能`
+* [1341](https://github.com/Vanessa219/vditor/pull/1341) 支持 markmap `引入特性`
+* [1335](https://github.com/Vanessa219/vditor/issues/1335) 嵌入 Iframe 时无法导出 PDF `修复缺陷`
+
+### v3.8.18 / 2022-11-01
+
+* [1325](https://github.com/Vanessa219/vditor/pull/1325) 日语改进 `文档相关`
+* [1312](https://github.com/Vanessa219/vditor/issues/1312) 导出 PDF 图表缺失 `修复缺陷`
+* [1297](https://github.com/Vanessa219/vditor/issues/1297) mermaid 升级到 9.1.7 `改进功能`
+* [1289](https://github.com/Vanessa219/vditor/issues/1289) 切换输入法后光标错位 `兼容性`
+* [1278](https://github.com/Vanessa219/vditor/issues/1278) RenderJSON 导出的 JSON 不正确 `修复缺陷`
+* [1275](https://github.com/Vanessa219/vditor/issues/1275) XSS 安全漏洞 `修复缺陷`
+
+### v3.8.17 / 2022-08-04
+
+* [1270](https://github.com/Vanessa219/vditor/issues/1270) 切换编辑模式 SV 脚注缩进丢失 `修复缺陷`
+* [1274](https://github.com/Vanessa219/vditor/issues/1274) XSS 安全漏洞 `修复缺陷`
+* [1269](https://github.com/Vanessa219/vditor/issues/1269) 代码块自动补全会包含链接引用和脚注 `修复缺陷`
+* [1263](https://github.com/Vanessa219/vditor/issues/1263) 所见即所得和即使渲染只有空格输入时，不会触发 input 事件 `修复缺陷`
+* [1264](https://github.com/Vanessa219/vditor/issues/1264) 链接中，会强制将&reg解析为 ® 字符 `修复缺陷`
+* [1242](https://github.com/Vanessa219/vditor/issues/1242) 在即时渲染模式下表格源文件未对齐 `改进功能`
+
+### v3.8.15 / 2022-05-24
+
+* [1241](https://github.com/Vanessa219/vditor/issues/1241) 默认 CDN 从 cdn.jsdelivr.net 切换到 unpkg.com `改进功能`
 * [1231](https://github.com/Vanessa219/vditor/pull/1231) 支持使用 Base64 显示图片 `引入特性`
 * [1235](https://github.com/Vanessa219/vditor/issues/1235) 自定义上传无法连续上传相同的图片 `修复缺陷`
 * [1228](https://github.com/Vanessa219/vditor/issues/1228) 使用删除图标删除后，大纲没有自动更新 `修复缺陷`

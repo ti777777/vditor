@@ -1,5 +1,5 @@
-import { Constants } from "../constants";
-import { merge } from "./merge";
+import {Constants} from "../constants";
+import {merge} from "./merge";
 
 export class Options {
     public options: IOptions;
@@ -58,6 +58,12 @@ export class Options {
             maxWidth: 800,
             mode: "both",
             theme: Constants.THEME_OPTIONS,
+        },
+        link: {
+            isOpen: true,
+        },
+        image: {
+            isPreview: true,
         },
         resize: {
             enable: false,

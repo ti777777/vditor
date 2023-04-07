@@ -29,7 +29,11 @@ export const focusEvent = (vditor: IVditor, editorElement: HTMLElement) => {
 export const dblclickEvent = (vditor: IVditor, editorElement: HTMLElement) => {
     editorElement.addEventListener("dblclick", (event: MouseEvent & { target: HTMLElement }) => {
         if (event.target.tagName === "IMG") {
-            previewImage(event.target as HTMLImageElement, vditor.options.lang, vditor.options.theme);
+            if (vditor.options.image.preview) {
+                vditor.options.image.preview(event.target);
+            } else if (vditor.options.image.isPreview) {
+                previewImage(event.target as HTMLImageElement, vditor.options.lang, vditor.options.theme);
+            }
         }
     });
 };

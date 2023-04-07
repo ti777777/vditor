@@ -23,11 +23,11 @@ export const exportMarkdown = (vditor: IVditor) => {
 
 export const exportPDF = (vditor: IVditor) => {
     vditor.tip.show(window.VditorI18n.generate, 3800);
-    const iframe = document.querySelector("iframe");
+    const iframe = document.querySelector("#vditorExportIframe") as HTMLIFrameElement;
     iframe.contentDocument.open();
     iframe.contentDocument.write(`<link rel="stylesheet" href="${vditor.options.cdn}/dist/index.css"/>
 <script src="${vditor.options.cdn}/dist/method.min.js"></script>
-<div id="preview"></div>
+<div id="preview" style="width: 800px"></div>
 <script>
 window.addEventListener("message", (e) => {
   if(!e.data) {
@@ -68,6 +68,7 @@ export const exportHTML = (vditor: IVditor) => {
         math: ${JSON.stringify(vditor.options.preview.math)},
     });
     Vditor.mermaidRender(previewElement, '${vditor.options.cdn}', '${vditor.options.theme}');
+    Vditor.markmapRender(previewElement, '${vditor.options.cdn}', '${vditor.options.theme}');
     Vditor.flowchartRender(previewElement, '${vditor.options.cdn}');
     Vditor.graphvizRender(previewElement, '${vditor.options.cdn}');
     Vditor.chartRender(previewElement, '${vditor.options.cdn}', '${vditor.options.theme}');
